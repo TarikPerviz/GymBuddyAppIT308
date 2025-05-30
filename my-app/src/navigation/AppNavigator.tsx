@@ -13,12 +13,15 @@ import ProfileScreen from '../screens/ProfileScreen';
 import FindBuddyScreen from '../screens/FindBuddyScreen';
 import WorkoutScreen from '../screens/WorkoutScreen';
 import ProfileSetupScreen from '../screens/ProfileSetupScreen';
+import EditProfileScreen from '../screens/EditProfileScreen';
 
 // Types
+// Add EditProfile to RootStackParamList for navigation typing
 export type RootStackParamList = {
   Auth: undefined;
   Main: undefined;
   ProfileSetup: undefined;
+  EditProfile: undefined;
   AppTabs: undefined;
   [key: string]: undefined; // This allows any string key with undefined value
 };
@@ -39,6 +42,20 @@ const SplashScreen = () => (
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<MainTabsParamList>();
+
+type ProfileStackParamList = {
+  Profile: undefined;
+  EditProfile: undefined;
+};
+const ProfileStack = createNativeStackNavigator<ProfileStackParamList>();
+function ProfileStackScreen() {
+  return (
+    <ProfileStack.Navigator>
+      <ProfileStack.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
+      <ProfileStack.Screen name="EditProfile" component={EditProfileScreen} options={{ title: 'Edit Profile' }} />
+    </ProfileStack.Navigator>
+  );
+}
 
 function MainTabs() {
   return (
@@ -69,7 +86,7 @@ function MainTabs() {
       <Tab.Screen name="Workout" component={WorkoutScreen} />
       <Tab.Screen 
         name="Profile" 
-        component={ProfileScreen} 
+        component={ProfileStackScreen} 
         options={{
           tabBarLabel: 'Profile',
         }}
@@ -82,56 +99,27 @@ function MainTabs() {
 export default function AppNavigator() {
   const { currentUser, userProfile, loading } = useAuth();
 
-  // Show loading screen while checking auth state
-  if (loading) {
-    return <SplashScreen />;
-  }
-
   console.log('AppNavigator: Rendering navigation');
 
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {!currentUser ? (
-          // No user logged in - show auth screen
-          (() => {
-            console.log('AppNavigator: Rendering Auth screen');
-            return <Stack.Screen name="Auth" component={AuthScreen} />;
-          })()
-        ) : !userProfile?.name ? (
-          // User logged in but profile not complete - show profile setup
-          (() => {
-            console.log('AppNavigator: Rendering ProfileSetup screen', { 
-              hasName: !!userProfile?.name,
-              userId: currentUser.uid 
-            });
-            return (
-              <Stack.Screen 
-                name="ProfileSetup" 
-                component={ProfileSetupScreen} 
-                options={{
-                  gestureEnabled: false, // Prevent going back
-                }}
-              />
-            );
-          })()
+        {loading || (currentUser && userProfile === null) ? (
+          <Stack.Screen name="Splash" component={SplashScreen} />
+        ) : !currentUser ? (
+          <Stack.Screen name="Auth" component={AuthScreen} />
+        ) : currentUser && userProfile && !userProfile.name ? (
+          <Stack.Screen
+            name="ProfileSetup"
+            component={ProfileSetupScreen}
+            options={{ gestureEnabled: false }}
+          />
         ) : (
-          // User logged in and profile complete - show main app
-          (() => {
-            console.log('AppNavigator: Rendering MainTabs', { 
-              userName: userProfile?.name,
-              userId: currentUser.uid 
-            });
-            return (
-              <Stack.Screen 
-                name="AppTabs" 
-                component={MainTabs}
-                options={{
-                  gestureEnabled: false, // Prevent going back to auth
-                }}
-              />
-            );
-          })()
+          <Stack.Screen
+            name="AppTabs"
+            component={MainTabs}
+            options={{ gestureEnabled: false }}
+          />
         )}
       </Stack.Navigator>
     </NavigationContainer>

@@ -4,7 +4,12 @@ import { useAuth } from '../context/AuthContext';
 import { getAvatarByIndex } from '../utils/avatarUtils';
 import Avatar from '../components/Avatar';
 
+import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { RootStackParamList } from '../navigation/AppNavigator';
+
 const ProfileScreen: React.FC = () => {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const { currentUser, userProfile, logout } = useAuth();
   const [loading, setLoading] = useState(true);
   
@@ -80,7 +85,7 @@ const ProfileScreen: React.FC = () => {
 
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Settings</Text>
-        <TouchableOpacity style={styles.settingItem}>
+        <TouchableOpacity style={styles.settingItem} onPress={() => navigation.navigate('EditProfile')}>
           <Text style={styles.settingText}>Edit Profile</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.settingItem}>
