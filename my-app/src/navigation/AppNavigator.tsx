@@ -14,6 +14,7 @@ import FindBuddyScreen from '../screens/FindBuddyScreen';
 import WorkoutScreen from '../screens/WorkoutScreen';
 import ProfileSetupScreen from '../screens/ProfileSetupScreen';
 import EditProfileScreen from '../screens/EditProfileScreen';
+import MyBuddiesScreen from '../screens/MyBuddiesScreen';
 
 // Types
 // Add EditProfile to RootStackParamList for navigation typing
@@ -29,6 +30,7 @@ export type RootStackParamList = {
 type MainTabsParamList = {
   Home: undefined;
   'Find Buddy': undefined;
+  'My Buddies': undefined;
   Workout: undefined;
   Profile: undefined;
 };
@@ -43,16 +45,27 @@ const SplashScreen = () => (
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<MainTabsParamList>();
 
-type ProfileStackParamList = {
-  Profile: undefined;
+export type ProfileStackParamList = {
+  Profile: { userId?: string };
   EditProfile: undefined;
 };
 const ProfileStack = createNativeStackNavigator<ProfileStackParamList>();
 function ProfileStackScreen() {
   return (
     <ProfileStack.Navigator>
-      <ProfileStack.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
-      <ProfileStack.Screen name="EditProfile" component={EditProfileScreen} options={{ title: 'Edit Profile' }} />
+      <ProfileStack.Screen 
+        name="Profile" 
+        component={ProfileScreen} 
+        options={({ route }) => ({ 
+          headerShown: false,
+          title: route.params?.userId ? 'Buddy Profile' : 'My Profile'
+        })} 
+      />
+      <ProfileStack.Screen 
+        name="EditProfile" 
+        component={EditProfileScreen} 
+        options={{ title: 'Edit Profile' }} 
+      />
     </ProfileStack.Navigator>
   );
 }
@@ -69,6 +82,8 @@ function MainTabs() {
           } else if (route.name === 'Profile') {
             iconName = focused ? 'person' : 'person-outline';
           } else if (route.name === 'Find Buddy') {
+            iconName = focused ? 'search' : 'search-outline';
+          } else if (route.name === 'My Buddies') {
             iconName = focused ? 'people' : 'people-outline';
           } else if (route.name === 'Workout') {
             iconName = focused ? 'barbell' : 'barbell-outline';
@@ -83,6 +98,7 @@ function MainTabs() {
     >
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Find Buddy" component={FindBuddyScreen} />
+      <Tab.Screen name="My Buddies" component={MyBuddiesScreen} />
       <Tab.Screen name="Workout" component={WorkoutScreen} />
       <Tab.Screen 
         name="Profile" 
