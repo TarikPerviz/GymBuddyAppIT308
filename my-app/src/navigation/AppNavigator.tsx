@@ -8,10 +8,8 @@ import { useAuth } from '../context/AuthContext';
 
 // Import your screens
 import AuthScreen from '../screens/AuthScreen';
-import HomeScreen from '../screens/HomeScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import FindBuddyScreen from '../screens/FindBuddyScreen';
-import WorkoutScreen from '../screens/WorkoutScreen';
 import ProfileSetupScreen from '../screens/ProfileSetupScreen';
 import EditProfileScreen from '../screens/EditProfileScreen';
 import MyBuddiesScreen from '../screens/MyBuddiesScreen';
@@ -28,10 +26,8 @@ export type RootStackParamList = {
 };
 
 type MainTabsParamList = {
-  Home: undefined;
   'Find Buddy': undefined;
   'My Buddies': undefined;
-  Workout: undefined;
   Profile: undefined;
 };
 
@@ -77,16 +73,12 @@ function MainTabs() {
         tabBarIcon: ({ focused, color, size }) => {
           let iconName: keyof typeof Ionicons.glyphMap = 'help';
 
-          if (route.name === 'Home') {
-            iconName = focused ? 'home' : 'home-outline';
-          } else if (route.name === 'Profile') {
+          if (route.name === 'Profile') {
             iconName = focused ? 'person' : 'person-outline';
           } else if (route.name === 'Find Buddy') {
             iconName = focused ? 'search' : 'search-outline';
           } else if (route.name === 'My Buddies') {
             iconName = focused ? 'people' : 'people-outline';
-          } else if (route.name === 'Workout') {
-            iconName = focused ? 'barbell' : 'barbell-outline';
           }
 
           return <Ionicons name={iconName} size={size} color={color} />;
@@ -96,10 +88,8 @@ function MainTabs() {
         headerShown: false,
       })}
     >
-      <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Find Buddy" component={FindBuddyScreen} />
       <Tab.Screen name="My Buddies" component={MyBuddiesScreen} />
-      <Tab.Screen name="Workout" component={WorkoutScreen} />
       <Tab.Screen 
         name="Profile" 
         component={ProfileStackScreen} 
