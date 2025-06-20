@@ -231,6 +231,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f5f5f5',
+    paddingTop: 44, // Add extra padding at the top for status bar
     padding: 16,
   },
   center: {
