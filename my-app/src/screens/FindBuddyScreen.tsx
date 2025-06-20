@@ -189,15 +189,7 @@ const FindBuddyScreen: React.FC = () => {
   if (loading) {
     return (
       <View style={[styles.container, styles.center]}>
-        <ActivityIndicator size="large" color="#0000ff" />
-      </View>
-    );
-  }
-
-  if (error) {
-    return (
-      <View style={[styles.container, styles.center]}>
-        <Text style={styles.errorText}>{error}</Text>
+        <ActivityIndicator size="large" color="#357abd" />
       </View>
     );
   }
@@ -473,11 +465,16 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: '#fff',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    padding: 20,
+    backgroundColor: '#f8f9fa',
+    borderTopLeftRadius: 32,
+    borderTopRightRadius: 32,
+    padding: 28,
     maxHeight: '80%',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: -3 },
+    shadowOpacity: 0.10,
+    shadowRadius: 12,
+    elevation: 8,
   },
   modalHeader: {
     flexDirection: 'row',
@@ -486,9 +483,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   modalTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#333',
+    fontSize: 22,
+    fontWeight: '700',
+    color: '#357abd',
+    letterSpacing: 0.3,
   },
   filterContainer: {
     marginBottom: 20,
@@ -497,10 +495,11 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   filterSectionTitle: {
-    fontSize: 16,
-    fontWeight: '600',
+    fontSize: 17,
+    fontWeight: '700',
+    color: '#357abd',
     marginBottom: 12,
-    color: '#333',
+    letterSpacing: 0.2,
   },
   workoutTypesContainer: {
     flexDirection: 'row',
@@ -509,24 +508,25 @@ const styles = StyleSheet.create({
   },
   workoutTypeItem: {
     paddingVertical: 8,
-    paddingHorizontal: 16,
+    paddingHorizontal: 18,
     borderRadius: 20,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#e3eafc',
     marginRight: 8,
     marginBottom: 8,
     borderWidth: 1,
-    borderColor: '#f0f0f0',
+    borderColor: '#d0d7e2',
   },
   workoutTypeItemSelected: {
-    backgroundColor: '#e3f2fd',
-    borderColor: '#007AFF',
+    backgroundColor: '#357abd',
+    borderColor: '#357abd',
   },
   workoutTypeText: {
-    color: '#333',
     fontSize: 14,
+    color: '#357abd',
+    fontWeight: '500',
   },
   workoutTypeTextSelected: {
-    color: '#007AFF',
+    color: '#fff',
     fontWeight: '600',
   },
   fitnessLevelContainer: {
@@ -535,24 +535,25 @@ const styles = StyleSheet.create({
   },
   fitnessLevelItem: {
     paddingVertical: 8,
-    paddingHorizontal: 16,
+    paddingHorizontal: 18,
     borderRadius: 20,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#e3eafc',
     marginRight: 8,
     marginBottom: 8,
     borderWidth: 1,
-    borderColor: '#f0f0f0',
+    borderColor: '#d0d7e2',
   },
   fitnessLevelItemSelected: {
-    backgroundColor: '#e3f2fd',
-    borderColor: '#007AFF',
+    backgroundColor: '#357abd',
+    borderColor: '#357abd',
   },
   fitnessLevelText: {
-    color: '#333',
     fontSize: 14,
+    color: '#357abd',
+    fontWeight: '500',
   },
   fitnessLevelTextSelected: {
-    color: '#007AFF',
+    color: '#fff',
     fontWeight: '600',
   },
   modalFooter: {
@@ -563,50 +564,42 @@ const styles = StyleSheet.create({
     borderTopColor: '#eee',
   },
   clearButton: {
+    padding: 12,
+    borderRadius: 20,
+    borderWidth: 1.5,
+    borderColor: '#357abd',
     flex: 1,
-    padding: 14,
-    alignItems: 'center',
     marginRight: 8,
+    alignItems: 'center',
+    backgroundColor: '#fff',
   },
   clearButtonText: {
-    color: '#007AFF',
+    color: '#357abd',
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: '700',
+    letterSpacing: 0.3,
   },
   applyButton: {
-    flex: 2,
-    backgroundColor: '#007AFF',
-    borderRadius: 10,
-    padding: 14,
+    flex: 1,
+    backgroundColor: '#357abd',
+    padding: 12,
+    borderRadius: 20,
     alignItems: 'center',
+    marginLeft: 8,
   },
   applyButtonText: {
     color: '#fff',
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: '700',
+    letterSpacing: 0.3,
   },
   center: {
     justifyContent: 'center',
     alignItems: 'center',
   },
-  errorText: {
-    color: 'red',
-    fontSize: 16,
-    textAlign: 'center',
-    marginHorizontal: 20,
-  },
-  bioText: {
-    color: '#666',
-    fontSize: 14,
-    marginTop: 4,
-    fontStyle: 'italic',
-  },
-  listContent: {
-    paddingBottom: 20,
-  },
   buddyCard: {
     flexDirection: 'row',
-    backgroundColor: 'white',
+    backgroundColor: '#fff',
     borderRadius: 12,
     padding: 16,
     marginBottom: 12,
@@ -627,46 +620,66 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   buddyName: {
-    fontSize: 16,
-    fontWeight: '600',
-    marginBottom: 4,
+    fontSize: 18,
+    fontWeight: '700',
+    marginBottom: 6,
+    color: '#2d3436',
+    fontFamily: 'System',
+    letterSpacing: 0.2,
   },
   buddyDetail: {
-    fontSize: 12,
-    color: '#666',
+    fontSize: 14,
+    color: '#4a90e2',
     marginBottom: 2,
+    fontWeight: '500',
+  },
+  bioText: {
+    color: '#666',
+    fontSize: 14,
+    marginTop: 4,
+    fontStyle: 'italic',
   },
   connectButton: {
-    backgroundColor: '#4285f4',
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    borderRadius: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 24,
+    backgroundColor: '#357abd',
+    marginLeft: 12,
+    shadowColor: '#357abd',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.18,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  listContent: {
+    paddingBottom: 20,
   },
   connectButtonText: {
-    color: 'white',
-    fontSize: 12,
+    color: '#fff',
+    fontSize: 15,
     fontWeight: '600',
+    letterSpacing: 0.5,
   },
   buttonDisabled: {
-    opacity: 0.6,
+    backgroundColor: '#b2bec3',
   },
   pendingButton: {
-    backgroundColor: '#f0f0f0',
-    borderWidth: 1,
-    borderColor: '#ccc',
+    backgroundColor: '#fbc531',
   },
   pendingText: {
-    color: '#666',
-    fontWeight: '500',
+    color: '#222f3e',
+    fontSize: 15,
+    fontWeight: '700',
   },
   buddiesButton: {
-    backgroundColor: '#e3f2fd',
-    borderWidth: 1,
-    borderColor: '#bbdefb',
+    backgroundColor: '#44bd32',
   },
   buddiesText: {
-    color: '#1976d2',
-    fontWeight: '500',
+    color: '#fff',
+    fontSize: 15,
+    fontWeight: '700',
   },
 });
 
