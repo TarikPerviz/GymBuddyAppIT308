@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, KeyboardAvoidingView, Platform, Image } from 'react-native';
 import { useAuth } from '../context/AuthContext';
 
 const AuthScreen: React.FC = () => {
@@ -71,6 +71,15 @@ const AuthScreen: React.FC = () => {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <View style={styles.formContainer}>
+        <View style={styles.logoContainer}>
+          <View style={styles.logoWrapper}>
+            <Image 
+              source={require('../../assets/logo.png')} 
+              style={styles.logoImage}
+              resizeMode="cover"
+            />
+          </View>
+        </View>
         <Text style={styles.title}>{isLogin ? 'Welcome Back!' : 'Create Account'}</Text>
         
         {!isLogin && (
@@ -128,6 +137,21 @@ const AuthScreen: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
+  logoContainer: {
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  logoWrapper: {
+    width: 250,
+    height: 200,
+    borderRadius: 20,
+    overflow: 'hidden',
+    backgroundColor: 'white', // Add background color to match your app's theme
+  },
+  logoImage: {
+    width: '100%',
+    height: '100%',
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
